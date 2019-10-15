@@ -93,7 +93,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
     private function mergeConfig()
     {
         $path = $this->getConfigPath();
-        $this->mergeConfigFrom($path, 'bar');
+        $this->mergeConfigFrom($path, 'laravellogger');
     }
 
     private function getConfigPath()
@@ -104,7 +104,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
     private function publishConfig()
     {
         $path = $this->getConfigPath();
-        $this->publishes([$path => config_path('bar.php')], 'config');
+        $this->publishes([$path => config_path('laravellogger.php')], 'config');
     }
 
     private function publishMigrations()
