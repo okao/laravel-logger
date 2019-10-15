@@ -89,19 +89,12 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //        $this->app->make("");
 
         $this->mergeConfig();
-        $this->mergeModel();
     }
 
     private function mergeConfig()
     {
         $path = $this->getConfigPath();
         $this->mergeConfigFrom($path, 'laravellogger');
-    }
-
-    private function mergeModel()
-    {
-        $path = $this->getModelPath();
-        $this->mergeConfigFrom($path, 'OkaoLog');
     }
 
     private function getConfigPath()
