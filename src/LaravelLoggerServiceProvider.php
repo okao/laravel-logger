@@ -62,6 +62,9 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //            $this->bootForConsole();
 //        }
 
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias(LaravelLoggerMiddleware::class, 'App\Http\Middleware\LaravelLoggerMiddleware');
+
         $this->publishConfig();
         $this->publishModel();
         $this->publishMiddleware();
@@ -81,14 +84,13 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //        $this->app->singleton('laravellogger', function ($app) {
 //            return new LaravelLogger;
 //        });
-//        $this->app->bind('LaravelLogger', function () {
-//            $request = app(\Illuminate\Http\Request::class);
-//
-//            return app(LaravelLogger::class, [$request->foo]);
-//        });
+        $this->app->bind('LaravelLogger', function () {
+            $request = app(\Illuminate\Http\Request::class);
+
+            return app(LaravelLogger::class, [$request->foo]);
+        });
 
 //        $this->app->make("");
-
         $this->mergeConfig();
     }
 
@@ -105,12 +107,12 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 
     private function getModelPath()
     {
-        return __DIR__ . '/Models/OkaoLog.php';
+        return __DIR__ . '/../Models/OkaoLog.php';
     }
 
     private function getMiddlewarePath()
     {
-        return __DIR__ . '/Middleware/LaravelLoggerMiddleware.php';
+        return __DIR__ . '/../Middleware/LaravelLoggerMiddleware.php';
     }
 
     private function publishConfig()
