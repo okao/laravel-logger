@@ -1,6 +1,6 @@
 {
     "name": "okao/laravellogger",
-    "description": ":description",
+    "description": "This package logs all Http Requests Input and Output to a database",
     "license": "MIT",
     "authors": [
         {
