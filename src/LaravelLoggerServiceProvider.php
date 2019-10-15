@@ -16,32 +16,34 @@ class LaravelLoggerServiceProvider extends ServiceProvider
     {
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'okao');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'okao');
-         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+//         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         //publish middleware file
-        if (!$this->migrationHasAlreadyBeenPublished()) {
-            // Publish migration
-            $timestamp = date('Y_m_d_His', time());
-            $this->publishes([
-                __DIR__ . "/Database/migrations/2019_10_15_175246_create_okao_logs_table.php"
-                => database_path("/migrations/{$timestamp}_create_okao_logs_table.php"),
-            ], 'migrations');
-        }
+//        $this->publishConfig();
+//        $this->publishMigrations();
+//        if (!$this->migrationHasAlreadyBeenPublished()) {
+//            // Publish migration
+//            $timestamp = date('Y_m_d_His', time());
+//            $this->publishes([
+//                __DIR__ . "/Database/migrations/2019_10_15_175246_create_okao_logs_table.php"
+//                => database_path("/migrations/{$timestamp}_create_okao_logs_table.php"),
+//            ], 'migrations');
+//        }
 
         // Publish a config file
-        $this->publishes([
-            __DIR__ . '/../config/laravellogger.php' => config_path('laravellogger.php'),
-        ], 'config');
+//        $this->publishes([
+//            __DIR__ . '/../config/laravellogger.php' => config_path('laravellogger.php'),
+//        ], 'config');
 
-        if (!$this->modelHasAlreadyBeenPublished()) {
-            // Publish model
-//            $timestamp = date('Y_m_d_His', time());
-            $this->publishes([
-                __DIR__ . "/Models/OkaoLog.php"
-                => app_path("OkaoLog.php"),
-            ], 'model');
-        }
+//        if (!$this->modelHasAlreadyBeenPublished()) {
+//            // Publish model
+////            $timestamp = date('Y_m_d_His', time());
+//            $this->publishes([
+//                __DIR__ . "/Models/OkaoLog.php"
+//                => app_path("OkaoLog.php"),
+//            ], 'model');
+//        }
 
 //        if (!$this->middlewareHasAlreadyBeenPublished()) {
 //            // Publish middleware
@@ -59,6 +61,9 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //        if ($this->app->runningInConsole()) {
 //            $this->bootForConsole();
 //        }
+
+        $this->publishConfig();
+        $this->publishMigrations();
     }
 
     /**
@@ -80,7 +85,37 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //            return app(LaravelLogger::class, [$request->foo]);
 //        });
 
-        $this->app->make("Middleware\LaravelLoggerMiddleware");
+//        $this->app->make("");
+
+        $this->mergeConfig();
+    }
+
+    private function mergeConfig()
+    {
+        $path = $this->getConfigPath();
+        $this->mergeConfigFrom($path, 'bar');
+    }
+
+    private function getConfigPath()
+    {
+        return __DIR__ . '/../config/laravellogger.php';
+    }
+
+    private function publishConfig()
+    {
+        $path = $this->getConfigPath();
+        $this->publishes([$path => config_path('bar.php')], 'config');
+    }
+
+    private function publishMigrations()
+    {
+        $path = $this->getMigrationsPath();
+        $this->publishes([$path => database_path('migrations')], 'migrations');
+    }
+
+    private function getMigrationsPath()
+    {
+        return __DIR__ . '/Database/migrations/';
     }
 
     /**
