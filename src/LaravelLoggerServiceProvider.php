@@ -38,7 +38,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
             // Publish model
 //            $timestamp = date('Y_m_d_His', time());
             $this->publishes([
-                __DIR__ . "Models/OkaoLog.php"
+                __DIR__ . "/Models/OkaoLog.php"
                 => app_path("OkaoLog.php"),
             ], 'model');
         }
@@ -47,7 +47,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
             // Publish middleware
 //            $timestamp = date('Y_m_d_His', time());
             $this->publishes([
-                __DIR__ . "Middleware/LaravelLoggerMiddleware.php"
+                __DIR__ . "/Middleware/LaravelLoggerMiddleware.php"
                 => app_path("/Http/Middleware/LaravelLoggerMiddleware.php"),
             ], 'middleware');
         }
