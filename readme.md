@@ -15,6 +15,10 @@ Via Composer
 $ composer require okao/laravellogger
 ```
 
+``` bash
+$ php artisan vendor:publish 
+```
+
 ## Usage
 
 ## Change log

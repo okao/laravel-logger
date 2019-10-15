@@ -43,14 +43,14 @@ class LaravelLoggerServiceProvider extends ServiceProvider
             ], 'model');
         }
 
-        if (!$this->middlewareHasAlreadyBeenPublished()) {
-            // Publish middleware
-//            $timestamp = date('Y_m_d_His', time());
-            $this->publishes([
-                __DIR__ . "/Middleware/LaravelLoggerMiddleware.php"
-                => app_path("/Http/Middleware/LaravelLoggerMiddleware.php"),
-            ], 'middleware');
-        }
+//        if (!$this->middlewareHasAlreadyBeenPublished()) {
+//            // Publish middleware
+////            $timestamp = date('Y_m_d_His', time());
+//            $this->publishes([
+//                __DIR__ . "/Middleware/LaravelLoggerMiddleware.php"
+//                => app_path("/Http/Middleware/LaravelLoggerMiddleware.php"),
+//            ], 'middleware');
+//        }
 
 
 //        $router->aliasMiddleware('laravel_logger_middleware', LaravelLoggerMiddleware::class);
@@ -79,6 +79,8 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //
 //            return app(LaravelLogger::class, [$request->foo]);
 //        });
+
+        $this->app->make("Middleware\LaravelLoggerMiddleware");
     }
 
     /**
