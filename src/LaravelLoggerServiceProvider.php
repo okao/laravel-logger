@@ -12,7 +12,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(\Illuminate\Routing\Router $router)
+    public function boot()
     {
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'okao');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'okao');
@@ -40,7 +40,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . "Models/OkaoLog.php"
                 => app_path("OkaoLog.php"),
-            ], 'migrations');
+            ], 'model');
         }
 
         if (!$this->middlewareHasAlreadyBeenPublished()) {
@@ -49,7 +49,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . "Middleware/LaravelLoggerMiddleware.php"
                 => app_path("/Http/Middleware/LaravelLoggerMiddleware.php"),
-            ], 'migrations');
+            ], 'middleware');
         }
 
 
