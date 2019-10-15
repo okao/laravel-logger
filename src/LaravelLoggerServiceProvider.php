@@ -64,6 +64,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 
         $this->publishConfig();
         $this->publishModel();
+        $this->publishMiddleware();
         $this->publishMigrations();
     }
 
@@ -107,6 +108,11 @@ class LaravelLoggerServiceProvider extends ServiceProvider
         return __DIR__ . '/Models/OkaoLog.php';
     }
 
+    private function getMiddlewarePath()
+    {
+        return __DIR__ . '/Middleware/LaravelLoggerMiddleware.php';
+    }
+
     private function publishConfig()
     {
         $path = $this->getConfigPath();
@@ -117,6 +123,12 @@ class LaravelLoggerServiceProvider extends ServiceProvider
     {
         $path = $this->getModelPath();
         $this->publishes([$path => app_path('OkaoLog.php')], 'model');
+    }
+
+    private function publishMiddleware()
+    {
+        $path = $this->getMiddlewarePath();
+        $this->publishes([$path => app_path('/Http/Middleware/LaravelLoggerMiddleware.php')], 'middleware');
     }
 
     private function publishMigrations()
