@@ -19,6 +19,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
+        //publish middleware file
         if (!$this->migrationHasAlreadyBeenPublished()) {
             // Publish migration
             $timestamp = date('Y_m_d_His', time());
@@ -33,9 +34,26 @@ class LaravelLoggerServiceProvider extends ServiceProvider
             __DIR__ . '/../config/laravellogger.php' => config_path('laravellogger.php'),
         ], 'config');
 
+        if (!$this->modelHasAlreadyBeenPublished()) {
+            // Publish model
+//            $timestamp = date('Y_m_d_His', time());
+            $this->publishes([
+                __DIR__ . "Models/OkaoLog.php"
+                => app_path("OkaoLog.php"),
+            ], 'migrations');
+        }
+
+        if (!$this->middlewareHasAlreadyBeenPublished()) {
+            // Publish middleware
+//            $timestamp = date('Y_m_d_His', time());
+            $this->publishes([
+                __DIR__ . "Middleware/LaravelLoggerMiddleware.php"
+                => app_path("/Http/Middleware/LaravelLoggerMiddleware.php"),
+            ], 'migrations');
+        }
 
 
-        $router->aliasMiddleware('laravel_logger_middleware', LaravelLoggerMiddleware::class);
+//        $router->aliasMiddleware('laravel_logger_middleware', LaravelLoggerMiddleware::class);
 
         // Publishing is only necessary when using the CLI.
 //        if ($this->app->runningInConsole()) {
@@ -113,5 +131,22 @@ class LaravelLoggerServiceProvider extends ServiceProvider
         return count($files) > 0;
     }
 
+    /**
+     * @return bool
+     */
+    protected function modelHasAlreadyBeenPublished()
+    {
+        $files = glob(app_path('OkaoLog.php'));
+        return count($files) > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function middlewareHasAlreadyBeenPublished()
+    {
+        $files = glob(app_path('/Http/Middleware/LaravelLoggerMiddleware.php'));
+        return count($files) > 0;
+    }
 
 }
