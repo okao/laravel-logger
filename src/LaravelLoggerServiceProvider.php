@@ -63,6 +63,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //        }
 
         $this->publishConfig();
+        $this->publishModel();
         $this->publishMigrations();
     }
 
@@ -88,6 +89,7 @@ class LaravelLoggerServiceProvider extends ServiceProvider
 //        $this->app->make("");
 
         $this->mergeConfig();
+        $this->mergeModel();
     }
 
     private function mergeConfig()
@@ -96,15 +98,32 @@ class LaravelLoggerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($path, 'laravellogger');
     }
 
+    private function mergeModel()
+    {
+        $path = $this->getModelPath();
+        $this->mergeConfigFrom($path, 'OkaoLog');
+    }
+
     private function getConfigPath()
     {
         return __DIR__ . '/../config/laravellogger.php';
+    }
+
+    private function getModelPath()
+    {
+        return __DIR__ . '/Models/OkaoLog.php';
     }
 
     private function publishConfig()
     {
         $path = $this->getConfigPath();
         $this->publishes([$path => config_path('laravellogger.php')], 'config');
+    }
+
+    private function publishModel()
+    {
+        $path = $this->getModelPath();
+        $this->publishes([$path => app_path('OkaoLog.php')], 'model');
     }
 
     private function publishMigrations()
